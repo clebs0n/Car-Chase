@@ -84,7 +84,7 @@ void play(){
 }
 
 void obstUpdate(){
-    for(int i=0; i < 2; i++){
+    for(int i=0; i < 5; i++){
         gotoxy(obst[i].posX, obst[i].posY-4);
         for(int j=0; j < obstWidth; j++){
             cout <<" ";
@@ -97,10 +97,27 @@ void obstUpdate(){
     Sleep(50);
 }
 
-void generateObstacles(){
+void obstInitialSetup(){
+    int helper = - 60;
+    for(int i=0; i < 5; i++){
+        carX = (rand() % (upper - lower + 1)) + lower;
+        obst[i].posX = carX; obst[i].posY = helper;
+        helper+=10;
+    }
+}
+
+void generateObstacles(int index){
 
     carX = (rand() % (upper - lower + 1)) + lower;
-    obst[obstCounter].posX = carX; obst[obstCounter].posY = 0;
+    obst[index].posX = carX; obst[index].posY = 0;
+}
+
+void obstInherit(){
+    for(int i=0; i < 4; i++){
+        obst[i].posX = obst[i+1].posX;
+        obst[i].posY = obst[i+1].posY;
+    }
+    generateObstacles(4);
 }
 
 
@@ -109,10 +126,13 @@ int main()
     srand((unsigned)time(NULL));
     drawCanva();
     drawCar();
-    generateObstacles();
+    obstInitialSetup();
 
     while(1){
         obstUpdate();
+        if(obst[0].posY >28){
+            obstInherit();
+        }
         play();
     }
     return 0;
