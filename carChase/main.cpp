@@ -98,7 +98,7 @@ void obstUpdate(){
 }
 
 void obstInitialSetup(){
-    int helper = 0;
+    int helper = -60;
     for(int i=0; i < 5; i++){
         carX = (rand() % (upper - lower + 1)) + lower;
         obst[i].posX = carX; obst[i].posY = helper;
@@ -130,7 +130,7 @@ int main()
 
     while(1){
         obstUpdate();
-        if(obst[0].posY > 25 && obst[4].posY > 15){
+        if(obst[0].posY > 25 && obst[4].posY > 5){
             obstInherit();
         }
         play();
